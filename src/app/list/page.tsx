@@ -2,13 +2,7 @@ import { chinguService } from '../../features/chingu/chingu.service';
 import { ChinguType } from '../../features/chingu/chingu.type';
 
 export default async function ListPage() {
-  const chingus = await chinguService.getAllChingus({
-    where: {
-      countryCode: 'GB',
-      gender: 'MALE'
-    },
-    limit: 10,
-  });
+  const chingus = await chinguService.getAllChingus({ limit: 10 });
 
   return (
     <div>
