@@ -10,3 +10,9 @@ export interface ChinguQueryOptions {
   orderBy?: ChinguOrderByInput;
   where?: ChinguWhereInput;
 }
+
+export interface ChinguCountryStats {
+  countryName: string | null;
+  countryCode: string | null;
+  count: number;
+}
