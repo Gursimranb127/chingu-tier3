@@ -49,7 +49,10 @@ async function main() {
               ? null
               : new Date(entry.Timestamp.replace(/\s+/g, ' ').trim()),
         gender: entry.Gender || null,
-        countryCode: entry['Country Code'] === 'Philippines (PH)' ? 'PH' : entry['Country Code'] || null,
+        countryCode:
+          entry['Country Code'] === 'Philippines (PH)'
+            ? 'PH'
+            : entry['Country Code'] || null,
         timezone: entry.Timezone || null,
         goal: entry.Goal || null,
         goalOther:
