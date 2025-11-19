@@ -1,24 +1,23 @@
-import { chinguService } from '../src/features/chingu/chingu.service';
+// import { chinguService } from '../src/features/chingu/chingu.service';
 
+// const main = async () => {
+//   const countries = await chinguService.getCountsByCountry();
 
-const main = async () => { 
-  const countries = await chinguService.getCountsByCountry();
-  
-  const codes = countries.map((country) => country.countryCode);
+//   const codes = countries.map((country) => country.countryCode);
 
-  const dict = await codes.reduce((acc, cur) => {
-    if (acc[cur]) {
-      acc[cur] += 1
-    } else {
-      acc[cur] = 1
-    }
-    return acc;
-  }, {});
-  
-  console.table(dict);
-}
+//   const dict = await codes.reduce((acc, cur) => {
+//     if (acc[cur]) {
+//       acc[cur] += 1;
+//     } else {
+//       acc[cur] = 1;
+//     }
+//     return acc;
+//   }, {});
 
-main();
+//   console.table(dict);
+// };
+
+// main();
 
 // import fs from 'fs';
 
@@ -43,7 +42,7 @@ main();
 
 //   for (const i in data.chingus) {
 //     const record = data.chingus[i];
-    
+
 //     for (const [key, value] of Object.entries(record)) {
 //       if (!typeAnalysis[key]) {
 //         typeAnalysis[key] = {
@@ -68,42 +67,42 @@ main();
 //       // Check for null/undefined
 //       if (value === null || value === undefined) {
 //         analysis.nullCount++;
-//         analysis.anomalies.push({ 
-//           index: parseInt(i), 
-//           key, 
-//           value, 
-//           reason: 'null/undefined value' 
+//         analysis.anomalies.push({
+//           index: parseInt(i),
+//           key,
+//           value,
+//           reason: 'null/undefined value'
 //         });
 //       }
 
 //       // Check for empty strings
 //       if (value === '') {
 //         analysis.emptyCount++;
-//         analysis.anomalies.push({ 
-//           index: parseInt(i), 
-//           key, 
-//           value, 
-//           reason: 'empty string' 
+//         analysis.anomalies.push({
+//           index: parseInt(i),
+//           key,
+//           value,
+//           reason: 'empty string'
 //         });
 //       }
 
 //       // Check for zero (if numeric field)
 //       if (value === 0 && typeof value === 'number') {
-//         analysis.anomalies.push({ 
-//           index: parseInt(i), 
-//           key, 
-//           value, 
-//           reason: 'zero value' 
+//         analysis.anomalies.push({
+//           index: parseInt(i),
+//           key,
+//           value,
+//           reason: 'zero value'
 //         });
 //       }
 
 //       // Check for type inconsistencies
 //       if (analysis.types.size > 1) {
-//         analysis.anomalies.push({ 
-//           index: parseInt(i), 
-//           key, 
-//           value, 
-//           reason: `type inconsistency: ${typeof value}` 
+//         analysis.anomalies.push({
+//           index: parseInt(i),
+//           key,
+//           value,
+//           reason: `type inconsistency: ${typeof value}`
 //         });
 //       }
 //     }
@@ -111,7 +110,7 @@ main();
 
 //   // Print summary
 //   console.log('\n=== DATA ANALYSIS SUMMARY ===\n');
-  
+
 //   for (const [key, info] of Object.entries(typeAnalysis)) {
 //     console.log(`Field: ${key}`);
 //     console.log(`  Types: ${Array.from(info.types).join(', ')}`);
@@ -120,7 +119,7 @@ main();
 //     console.log(`  Empty strings: ${info.emptyCount}`);
 //     console.log(`  Anomalies: ${info.anomalies.length}`);
 //     console.log(`  Sample values:`, info.samples.slice(0, 3));
-    
+
 //     if (info.anomalies.length > 0) {
 //       console.log(`  First 5 anomalies:`, info.anomalies.slice(0, 5));
 //     }
@@ -129,7 +128,7 @@ main();
 
 //   // Write detailed report to file
 //   const report = JSON.stringify(
-//     typeAnalysis, 
+//     typeAnalysis,
 //     (key, value) => value instanceof Set ? Array.from(value) : value,
 //     2
 //   );
@@ -156,9 +155,9 @@ main();
 //       if (!Object.hasOwn(typeAnalysis[key], 'types')) {
 //         typeAnalysis[key].types = new Set();
 //       }
-      
+
 //       typeAnalysis[key].types.add(typeof value);
-      
+
 //       if (!Object.hasOwn(typeAnalysis[key], 'anomolies')) {
 //         typeAnalysis[key].anomolies = [];
 //       }
