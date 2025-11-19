@@ -1,19 +1,24 @@
-import Link from "next/link"
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
 
-export default function NavBar() {
+export default function Navbar() {
   return (
-    <nav className='py-5 px-5 text-2xl'>
-      <ul className='flex justify-end gap-5'>
-        <li>
-          <Link href='/'>Home</Link>
-        </li>
-        <li>
-          <Link href='/list'>List</Link>
-        </li>
-        <li>
-          <Link href='/map'>Map</Link>
-        </li>
-      </ul>
-    </nav>
+    <NavigationMenu>
+      <NavigationMenuList className="gap-3">
+        <NavigationMenuItem>
+          <NavigationMenuLink className="px-4" href='/'>Home</NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink className="px-4" href='/list'>List</NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink className="px-4" href='/map'>Map</NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
   )
 }
