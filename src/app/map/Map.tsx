@@ -43,29 +43,45 @@ export default function Map() {
       zoom: 9,
     });
 
-    const marker1 = new mapboxgl.Marker()
-      .setLngLat([-71.1252, 42.4756])
-      .addTo(mapRef.current);
+    countryStats.forEach((stat) => {
+      const el = document.createElement('div');
 
-    // countryStats.forEach((stat) => {
-    //   const country = countries[stat.countryCode];
-    //   console.log(country);
-    //   if (country?.geo) {
-    //     new mapboxgl.Marker()
-    //       .setLngLat([country.geo.longitude, country.geo.latitude])
-    //       .addTo(mapRef.current!);
-    //   }
-    // });
+      // --- 1. Logarithmic size scaling ---
+      const baseSize = 20; // minimum size
+      const scale = Math.log(stat.count + 1); // log scale
+      const size = baseSize + scale * 10; // adjust multiplier to taste
+
+      // --- 2. Dynamic sizing based on size ---
+      el.style.minWidth = `${size}px`;
+      el.style.minHeight = `${size}px`;
+      el.style.padding = '4px'; // let text push outward if needed
+
+      // --- 3. Random background color ---
+      el.style.backgroundColor = `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`;
+
+      // --- 4. Visual styling ---
+      el.style.display = 'flex';
+      el.style.alignItems = 'center';
+      el.style.justifyContent = 'center';
+      el.style.borderRadius = '50%';
+      el.style.color = '#fff';
+      el.style.fontSize = '12px';
+      el.style.fontWeight = 'bold';
+
+      el.textContent = String(stat.count);
+
+      const { lat, lng } = getCountryCoords(stat.countryCode);
+      if (lat && lng) {
+        new mapboxgl.Marker({ element: el })
+          .setLngLat([lng, lat])
+          .addTo(mapRef.current!);
+      }
+    });
 
     return () => {
       mapRef.current?.remove();
     };
   }, [countryStats]);
-
-  // if (areCountryStatsLoading) return <div>Country Stats Loading...</div>;
-  // if (countryStatsError) return <div>Error Loading Country Stats</div>;
-
-  console.table(countryStats);
 
   return (
     <div className="relative h-full w-full">
@@ -82,14 +98,4 @@ export default function Map() {
       <div id="map-container" className="h-full w-full" ref={mapContainerRef} />
     </div>
   );
-
-  // return (
-  //   <>
-  //     <div
-  //       id="map-container"
-  //       className="h-full w-full bg-gray-100"
-  //       ref={mapContainerRef}
-  //     />
-  //   </>
-  // );
 }
