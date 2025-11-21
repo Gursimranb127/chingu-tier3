@@ -72,6 +72,7 @@ export default function Map() {
 
       el.textContent = String(stat.count);
 
+      // @ts-ignore
       const { lat, lng } = getCountryCoords(stat.countryCode);
       if (lat && lng) {
         new mapboxgl.Marker({ element: el })
