@@ -6,6 +6,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useCountryStats } from '@/hooks/useCountryStats';
 // @ts-ignore
 import geo from 'countries-cities-geo';
+import { ChinguCountryStats } from '@/features/chingu/chingu.type';
 
 export function getCountryCoords(countryCode) {
   const countries = geo.getCountries();
@@ -44,7 +45,7 @@ export default function Map() {
       zoom: 1,
     });
 
-    countryStats.forEach((stat) => {
+    countryStats.forEach((stat: ChinguCountryStats) => {
       const el = document.createElement('div');
 
       // --- 1. Logarithmic size scaling ---
