@@ -4,7 +4,23 @@ import { useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useCountryStats } from '@/hooks/useCountryStats';
-import { countries } from 'country-data';
+import geo from 'countries-cities-geo';
+
+export function getCountryCoords(countryCode) {
+  const countries = geo.getCountries();
+
+  const country = countries.find(
+    (c) => c.cca2.toUpperCase() === countryCode.toUpperCase()
+  );
+
+  if (!country || !country.latlng) {
+    return null;
+  }
+
+  const [lat, lng] = country.latlng;
+
+  return { lat, lng };
+}
 
 export default function Map() {
   const mapRef = useRef<mapboxgl.Map | null>(null);
