@@ -3,9 +3,9 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="flex-1 flex align-center justify-center justify-items-center p-20">
-      <div className="flex flex-col gap-10 justify-start w-65">
-        <h1 className="text-4xl text-center">
+    <div className="flex-1 flex align-center justify-center justify-items-center bg-[url('/images/world1.jpg')] bg-cover bg-top">
+      <div className="flex flex-col gap-10 justify-start w-65 m-20">
+        <h1 className="text-4xl text-center text-white">
           Find your fellow Chingus around the world
         </h1>
         <Link href="/map" className="self-center">
