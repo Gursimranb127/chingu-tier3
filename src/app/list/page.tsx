@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { chinguService } from '../../features/chingu/chingu.service';
 import { ChinguType } from '../../features/chingu/chingu.type';
 import { columns } from './columns';
