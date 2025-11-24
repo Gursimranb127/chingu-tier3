@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { chinguController } from '@/features/chingu/chingu.controller';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const data = await chinguController.countryStats();
     return NextResponse.json(data);
