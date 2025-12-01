@@ -3,6 +3,7 @@ import {
   ChinguQueryOptions,
   ChinguType,
   ChinguCountryStats,
+  ChinguCountryRoleStats,
 } from './chingu.type';
 
 function mapError(e: unknown): Error {
@@ -30,6 +31,21 @@ export const chinguController = {
   async countryStats(): Promise<ChinguCountryStats[]> {
     try {
       return await chinguService.getCountsByCountry();
+    } catch (e) {
+      throw mapError(e);
+    }
+  },
+
+  async getRoleCountsForCountry(params: {
+    countryCode?: string;
+    countryName?: string;
+  }): Promise<ChinguCountryRoleStats> {
+    try {
+      if (!params.countryCode && !params.countryName) {
+        throw new Error('Either countryCode or countryName is required');
+      }
+
+      return await chinguService.getRoleCountsForCountry(params);
     } catch (e) {
       throw mapError(e);
     }

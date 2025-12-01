@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import { ChinguCountryStats } from '@/features/chingu/chingu.type';
 import { createMarkerElement } from './markerElement';
 import { getCountryCoords } from '@/lib/geo';
+import { useSelectedCountry } from '@/stores/useSelectedCountry';
 
 interface MarkerType {
   map: mapboxgl.Map | null;
@@ -12,23 +13,27 @@ interface MarkerType {
 }
 
 const Marker = ({ map, country }: MarkerType) => {
+  const { setSelectedCountry } = useSelectedCountry();
+
   useEffect(() => {
-    if (!map) return;
+    if (!map || !country) return;
 
     const coords = getCountryCoords(country.countryCode);
 
-    if (coords) {
-      const el = createMarkerElement(country);
+    if (!coords) return;
 
-      const marker = new mapboxgl.Marker({ element: el })
-        .setLngLat([coords.lng, coords.lat])
-        .addTo(map);
+    const el = createMarkerElement(country);
 
-      return () => {
-        marker?.remove();
-      };
-    }
-  }, [map, country]);
+    el.addEventListener('click', () => setSelectedCountry?.(country));
+
+    const marker = new mapboxgl.Marker({ element: el })
+      .setLngLat([coords.lng, coords.lat])
+      .addTo(map);
+
+    return () => {
+      marker?.remove();
+    };
+  }, [map, country, setSelectedCountry]);
 
   return null;
 };

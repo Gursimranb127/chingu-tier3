@@ -16,3 +16,17 @@ export interface ChinguCountryStats {
   countryCode: string | null;
   count: number;
 }
+
+export type ChinguVoyageRole = Chingu['voyageRole'];
+
+export interface ChinguRoleCount {
+  voyageRole: ChinguVoyageRole;
+  count: number;
+}
+
+export interface ChinguCountryRoleStats {
+  countryName: string | null;
+  countryCode: string | null;
+  total: number;
+  roles: ChinguRoleCount[];
+}

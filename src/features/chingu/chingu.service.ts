@@ -3,6 +3,9 @@ import {
   ChinguQueryOptions,
   ChinguType,
   ChinguCountryStats,
+  ChinguCountryRoleStats,
+  ChinguRoleCount,
+  ChinguWhereInput,
 } from './chingu.type';
 
 export const chinguService = {
@@ -55,7 +58,60 @@ export const chinguService = {
     return rows.map((r) => ({
       countryName: r.countryName,
       countryCode: r.countryCode,
-      count: r._count._all,
+      count: r._count._all ?? 0,
     }));
+  },
+  getRoleCountsForCountry: async (params: {
+    countryCode?: string;
+    countryName?: string;
+  }): Promise<ChinguCountryRoleStats> => {
+    try {
+      const { countryCode, countryName } = params;
+
+      if (!countryCode && !countryName) {
+        throw new Error('countryCode or countryName is required');
+      }
+
+      const where: ChinguWhereInput = {};
+
+      if (countryCode) {
+        where.countryCode = { equals: countryCode, mode: 'insensitive' };
+      }
+
+      if (countryName) {
+        where.countryName = { equals: countryName, mode: 'insensitive' };
+      }
+
+      const meta = await prisma.chingu.findFirst({
+        where,
+        select: { countryName: true, countryCode: true },
+      });
+
+      const rows = await prisma.chingu.groupBy({
+        by: ['voyageRole'],
+        where,
+        _count: { id: true },
+        orderBy: [{ _count: { id: 'desc' } }],
+      });
+
+      const roles: ChinguRoleCount[] = rows.map((r) => ({
+        voyageRole: r.voyageRole,
+        count: r._count?.id ?? 0,
+      }));
+
+      const total = roles.reduce((acc, r) => acc + r.count, 0);
+
+      return {
+        countryName: meta?.countryName ?? countryName ?? null,
+        countryCode: meta?.countryCode ?? countryCode ?? null,
+        total,
+        roles,
+      };
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error('Failed to get role counts for country: Unknown error');
+    }
   },
 };
