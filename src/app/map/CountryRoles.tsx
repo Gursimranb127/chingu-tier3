@@ -41,6 +41,7 @@ export const CountryRoles = () => {
             {selectedCountry.countryCode ? (
               <ReactCountryFlag
                 countryCode={selectedCountry.countryCode}
+                svg
                 style={{
                   fontSize: '1.8rem',
                   lineHeight: '1.8rem',
