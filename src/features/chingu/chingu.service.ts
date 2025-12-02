@@ -68,10 +68,6 @@ export const chinguService = {
     try {
       const { countryCode, countryName } = params;
 
-      if (!countryCode && !countryName) {
-        throw new Error('countryCode or countryName is required');
-      }
-
       const where: ChinguWhereInput = {};
 
       if (countryCode) {
