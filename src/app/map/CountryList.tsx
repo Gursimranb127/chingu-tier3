@@ -46,6 +46,7 @@ const CountryList = ({ countryStats }: CountryListType) => {
                   {countryStat.countryCode ? (
                     <ReactCountryFlag
                       countryCode={countryStat.countryCode}
+                      svg
                       style={{
                         fontSize: '1.6rem',
                         lineHeight: '1.6rem',
