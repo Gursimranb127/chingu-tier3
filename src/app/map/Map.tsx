@@ -5,6 +5,7 @@ import { CountryRoles } from './CountryRoles';
 import MapView from './MapView';
 import { useCountryStats } from '@/hooks/useCountryStats';
 import { ViewToggle } from './ViewToggle';
+import SearchBar from './SearchBar';
 
 function Map() {
   const {
@@ -29,6 +30,7 @@ function Map() {
           </span>
         </div>
       )}
+      <SearchBar />
       <ViewToggle />
       <MapView countryStats={countryStats} />
       <CountryRoles />
