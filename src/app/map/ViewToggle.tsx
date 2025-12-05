@@ -11,7 +11,7 @@ export function ViewToggle() {
   };
 
   return (
-    <label className="flex items-center w-16 h-8 cursor-pointer select-none bg-gray-300 rounded-full p-0.5 absolute top-16 z-100 left-1/2 -translate-x-1/2">
+    <label className="flex items-center w-16 h-8 cursor-pointer select-none bg-gray-300 rounded-full p-0.5 absolute top-26 z-100 left-1/2 -translate-x-1/2">
       {/* The checkbox */}
       <input
         type="checkbox"
