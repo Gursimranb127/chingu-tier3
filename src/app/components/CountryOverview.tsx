@@ -14,6 +14,7 @@ import { Progress } from '@/components/ui/progress';
 import ReactCountryFlag from 'react-country-flag';
 import { getCountryData } from '@/lib/geo';
 import { X } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 export const CountryOverview = () => {
   const { selectedCountry, setSelectedCountry } = useSelectedCountry();
@@ -64,17 +65,17 @@ export const CountryOverview = () => {
           <div>
             <h5 className="font-semibold">Filters</h5>
             <div className="flex gap-2">
-              {Object.keys(filters).map((filter) => (
-                <div
+              {Object.entries(filters).map(([filter, value]) => (
+                <Badge
                   key={filter}
-                  className="flex items-center gap-0.5 border rounded-full px-2"
+                  variant="outline"
                   onClick={() => clearFilter(filter)}
                 >
-                  <p className="capitalize">
-                    {filter.replace(/([a-z])([A-Z])/g, '$1 $2')}
-                  </p>
+                  <span className="capitalize">
+                    {value?.replace(/([a-z])([A-Z])/g, '$1 $2')}
+                  </span>
                   <X size={16} />
-                </div>
+                </Badge>
               ))}
             </div>
           </div>
