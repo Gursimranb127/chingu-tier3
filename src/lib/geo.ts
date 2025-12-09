@@ -1,23 +1,44 @@
-// @ts-expect-error library has no types package
-import geo from 'countries-cities-geo';
+import countries from 'world-countries';
 
 interface CountryCoords {
   lat: number;
   lng: number;
 }
 
-interface GeoCountry {
-  cca2: string;
+interface Country {
+  name: {
+    common: string;
+  };
   latlng?: [number, number];
 }
 
-export function getCountryCoords(
-  countryCode: string | null
-): CountryCoords | null {
-  const countries = geo.getCountries();
+interface CountryData {
+  name: {
+    common: string;
+  };
+  latlng?: [number, number];
+  area: number;
+  cca2: string;
+  cca3: string;
+}
 
+export function getCountryData(countryName: string | null): CountryData | null {
   const country = countries.find(
-    (c: GeoCountry) => c.cca2.toUpperCase() === countryCode?.toUpperCase()
+    (c: Country) => c.name?.common?.toUpperCase() === countryName?.toUpperCase()
+  );
+
+  if (!country) {
+    return null;
+  }
+
+  return country;
+}
+
+export function getCountryCoords(
+  countryName: string | null
+): CountryCoords | null {
+  const country = countries.find(
+    (c: Country) => c.name?.common?.toUpperCase() === countryName?.toUpperCase()
   );
 
   if (!country || !country.latlng) {
