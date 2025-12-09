@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { chinguController } from '@/features/chingu/chingu.controller';
-import { ChinguQueryOptions } from '@/features/chingu/chingu.type';
+import {
+  ChinguQueryOptions,
+  ChinguWhereInput,
+} from '@/features/chingu/chingu.type';
+import { Prisma } from '@prisma/client';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
 
-  const countryCode = searchParams.get('code')?.trim();
-  const countryName = searchParams.get('name')?.trim();
   const limit = searchParams.get('limit')
     ? parseInt(searchParams.get('limit')!)
     : undefined;
@@ -18,20 +20,22 @@ export async function GET(req: NextRequest) {
   try {
     const options: ChinguQueryOptions = {};
 
-    if (countryCode || countryName) {
-      options.where = {};
-      if (countryCode) {
-        options.where.countryCode = {
-          equals: countryCode,
-          mode: 'insensitive',
-        };
+    // Build where clause from all query params except limit, offset, orderBy
+    const where: Record<string, Prisma.StringFilter> = {};
+    searchParams.forEach((value, key) => {
+      if (key !== 'limit' && key !== 'offset' && key !== 'orderBy') {
+        const trimmed = value.trim();
+        if (trimmed) {
+          where[key] = {
+            equals: trimmed,
+            mode: 'insensitive',
+          };
+        }
       }
-      if (countryName) {
-        options.where.countryName = {
-          equals: countryName,
-          mode: 'insensitive',
-        };
-      }
+    });
+
+    if (Object.keys(where).length > 0) {
+      options.where = where as ChinguWhereInput;
     }
 
     if (limit !== undefined) {

@@ -1,46 +1,40 @@
 import { useQuery } from '@tanstack/react-query';
 import axiosInstance from '@/api/axiosInstance';
-import { ChinguOrderByInput } from '@/features/chingu/chingu.type';
+import { ChinguOrderByInput, ChinguType } from '@/features/chingu/chingu.type';
+import { Chingu } from '@prisma/client';
 
-interface UseChingusParams {
-  countryCode?: string;
-  countryName?: string;
+type ChinguFilters = Partial<Omit<Chingu, 'id' | 'timestamp'>>;
+
+interface UseChingusParams extends ChinguFilters {
   limit?: number;
   offset?: number;
   orderBy?: ChinguOrderByInput;
 }
 
-export const useChingus = ({
-  countryCode,
-  countryName,
-  limit,
-  offset,
-  orderBy,
-}: UseChingusParams = {}) => {
-  const code = countryCode?.trim();
-  const name = countryName?.trim();
+export const useChingus = (params: UseChingusParams = {}) => {
+  const { limit, offset, orderBy, ...filters } = params;
 
-  const params: Record<string, string | number> = {};
+  const queryParams: Record<string, string | number> = {};
 
-  if (code) params.code = code;
-  if (name) params.name = name;
-  if (limit !== undefined) params.limit = limit;
-  if (offset !== undefined) params.offset = offset;
-  if (orderBy) params.orderBy = JSON.stringify(orderBy);
+  if (limit !== undefined) queryParams.limit = limit;
+  if (offset !== undefined) queryParams.offset = offset;
+  if (orderBy) queryParams.orderBy = JSON.stringify(orderBy);
 
-  return useQuery({
-    queryKey: [
-      'chingus',
-      code ?? null,
-      name ?? null,
-      limit ?? null,
-      offset ?? null,
-      orderBy ?? null,
-    ],
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      const trimmed = String(value).trim();
+      if (trimmed) {
+        queryParams[key] = trimmed;
+      }
+    }
+  });
+
+  return useQuery<ChinguType[]>({
+    queryKey: ['chingus', queryParams],
     retry: false,
     queryFn: async () => {
       const response = await axiosInstance.get('/chingu', {
-        params,
+        params: queryParams,
       });
       return response.data;
     },
