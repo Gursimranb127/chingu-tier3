@@ -1,9 +1,8 @@
 import { create } from 'zustand';
-import { ChinguCountryStats } from '@/features/chingu/chingu.type';
 
 interface SelectedCountryStore {
-  selectedCountry: ChinguCountryStats | null;
-  setSelectedCountry: (country: ChinguCountryStats | null) => void;
+  selectedCountry: string | null;
+  setSelectedCountry: (country: string | null) => void;
 }
 
 const useSelectedCountryStore = create<SelectedCountryStore>((set) => ({
@@ -15,6 +14,7 @@ export function useSelectedCountry() {
   const selectedCountry = useSelectedCountryStore(
     (state) => state.selectedCountry
   );
+
   const setSelectedCountry = useSelectedCountryStore(
     (state) => state.setSelectedCountry
   );
