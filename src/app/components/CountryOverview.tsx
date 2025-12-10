@@ -94,7 +94,6 @@ export const CountryOverview = () => {
 
                 {Object.entries(counts).map(([key, val]) => {
                   const filteredTotal = stats.summary.filtered;
-                  const fullTotal = stats.summary.total;
 
                   const percentOfFiltered =
                     filteredTotal > 0 ? (val / filteredTotal) * 100 : 0;

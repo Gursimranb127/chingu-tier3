@@ -20,7 +20,7 @@ import {
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Button } from '@/components/ui/button';
 import { SlidersVertical } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useFilterStore } from '@/stores/useFilterStore';
 
 export const Filter = () => {
