@@ -1,28 +1,27 @@
 'use client';
-
 import { useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
-import { ChinguCountryStats } from '@/features/chingu/chingu.type';
 import { createMarkerElement } from './markerElement';
 import { getCountryCoords } from '@/lib/geo';
 import { useSelectedCountry } from '@/stores/useSelectedCountry';
 
-interface MarkerType {
+interface MarkerProps {
   map: mapboxgl.Map | null;
-  country: ChinguCountryStats;
+  country: string;
+  count: number;
 }
 
-const Marker = ({ map, country }: MarkerType) => {
+export const Marker = ({ map, country, count }: MarkerProps) => {
   const { setSelectedCountry } = useSelectedCountry();
 
   useEffect(() => {
     if (!map || !country) return;
 
-    const coords = getCountryCoords(country.countryCode);
+    const coords = getCountryCoords(country);
 
     if (!coords) return;
 
-    const el = createMarkerElement(country);
+    const el = createMarkerElement(count);
 
     el.addEventListener('click', () => setSelectedCountry?.(country));
 
@@ -33,9 +32,7 @@ const Marker = ({ map, country }: MarkerType) => {
     return () => {
       marker?.remove();
     };
-  }, [map, country, setSelectedCountry]);
+  }, [map, country, count, setSelectedCountry]);
 
   return null;
 };
-
-export default Marker;
