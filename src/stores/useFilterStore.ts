@@ -35,7 +35,7 @@ export const useFilterStore = create<FilterStore>((set) => ({
   clearFilters: () => set({ filters: {} }),
   clearFilter: (key) =>
     set((state) => {
-      const { [key]: _, ...rest } = state.filters;
+      const { [key]: _removed, ...rest } = state.filters;
       return { filters: rest };
     }),
 }));
