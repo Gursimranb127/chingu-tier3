@@ -21,12 +21,6 @@ export const Map = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const { selectedCountry } = useSelectedCountry();
-  const { setFilter } = useFilterStore();
-
-  useEffect(() => {
-    setFilter('gender', 'female');
-    setFilter('voyageRole', 'developer');
-  }, []);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
