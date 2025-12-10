@@ -26,7 +26,7 @@ import { useFilterStore } from '@/stores/useFilterStore';
 export const Filter = () => {
   const { filters, setFilter, clearFilter, clearFilters } = useFilterStore();
   const [filterState, setFilterState] = useState({
-    role: filters.voyageRole || 'all',
+    voyageRole: filters.voyageRole || 'all',
     roleType: filters.roleType || 'all',
     soloProjectTier: filters.soloProjectTier || 'all',
     voyage: filters.voyageSignup || 'all',
@@ -36,7 +36,7 @@ export const Filter = () => {
 
   useEffect(() => {
     setFilterState({
-      role: filters.voyageRole || 'all',
+      voyageRole: filters.voyageRole || 'all',
       roleType: filters.roleType || 'all',
       soloProjectTier: filters.soloProjectTier || 'all',
       voyage: filters.voyageSignup || 'all',
@@ -47,7 +47,7 @@ export const Filter = () => {
 
   const handleFilterReset = () => {
     setFilterState({
-      role: 'all',
+      voyageRole: 'all',
       roleType: 'all',
       soloProjectTier: 'all',
       voyage: 'all',
@@ -85,12 +85,12 @@ export const Filter = () => {
           <div className="grid gap-3">
             <Label htmlFor="role">Role</Label>
             <Select
-              name="role"
-              value={filterState.role}
+              name="voyageRole"
+              value={filterState.voyageRole}
               onValueChange={(value) => {
                 setFilterState((prev) => ({
                   ...prev,
-                  role: value,
+                  voyageRole: value,
                 }));
               }}
             >
