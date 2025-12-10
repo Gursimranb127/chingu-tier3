@@ -26,24 +26,26 @@ import { useFilterStore } from '@/stores/useFilterStore';
 export const Filter = () => {
   const { filters, setFilter, clearFilter, clearFilters } = useFilterStore();
   const [filterState, setFilterState] = useState({
-    voyageRole: filters.voyageRole || 'all',
-    roleType: filters.roleType || 'all',
-    soloProjectTier: filters.soloProjectTier || 'all',
-    voyage: filters.voyageSignup || 'all',
-    voyageTier: filters.voyageTier || 'all',
-    gender: filters.gender || 'all',
+    voyageRole: 'all',
+    roleType: 'all',
+    soloProjectTier: 'all',
+    voyage: 'all',
+    voyageTier: 'all',
+    gender: 'all',
   });
 
-  useEffect(() => {
-    setFilterState({
-      voyageRole: filters.voyageRole || 'all',
-      roleType: filters.roleType || 'all',
-      soloProjectTier: filters.soloProjectTier || 'all',
-      voyage: filters.voyageSignup || 'all',
-      voyageTier: filters.voyageTier || 'all',
-      gender: filters.gender || 'all',
-    });
-  }, [filters]);
+  const handleDialogOpenChange = (open: boolean) => {
+    if (open) {
+      setFilterState({
+        voyageRole: filters.voyageRole || 'all',
+        roleType: filters.roleType || 'all',
+        soloProjectTier: filters.soloProjectTier || 'all',
+        voyage: filters.voyageSignup || 'all',
+        voyageTier: filters.voyageTier || 'all',
+        gender: filters.gender || 'all',
+      });
+    }
+  };
 
   const handleFilterReset = () => {
     setFilterState({
@@ -58,7 +60,6 @@ export const Filter = () => {
   };
 
   const handleFilterSubmit = () => {
-    // TODO: create logic for setting and unsetting filters with filter hook
     Object.entries(filterState).forEach(([key, val]) => {
       console.log(key, val);
       if (val === 'all') {
@@ -71,7 +72,7 @@ export const Filter = () => {
   };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={handleDialogOpenChange}>
       <DialogTrigger asChild>
         <Button variant="outline">
           <SlidersVertical />
