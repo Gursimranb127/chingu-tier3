@@ -6,7 +6,6 @@ import { Marker } from './Marker';
 import { useSelectedCountry } from '@/stores/useSelectedCountry';
 import { getCountryData } from '@/lib/geo';
 import { useChinguStats } from '@/hooks/useChinguStats';
-import { useFilterStore } from '@/stores/useFilterStore';
 
 const calculateZoom = (area: number): number => {
   if (area > 5000000) return 2.5;
