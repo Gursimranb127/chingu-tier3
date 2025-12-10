@@ -77,7 +77,7 @@ export const SearchBar = () => {
   }, [selectedIndex]);
 
   return (
-    <div className="absolute top-16 z-1000 flex w-full items-center justify-center px-4">
+    <div className="flex-1">
       <div className="relative w-full md:w-auto">
         <input
           type="search"
@@ -90,7 +90,7 @@ export const SearchBar = () => {
         <Search className="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
 
         {areResultsOpen && (
-          <div className="absolute mt-1 max-h-60 w-full overflow-y-auto rounded-md border bg-white p-1 shadow-md">
+          <div className="absolute mt-1 max-h-60 w-full overflow-y-auto rounded-md border bg-white p-1 shadow-md z-50">
             {filteredResults.map((countryName, index) => (
               <div
                 key={countryName}
