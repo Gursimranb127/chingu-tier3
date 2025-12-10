@@ -20,19 +20,30 @@ import {
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Button } from '@/components/ui/button';
 import { SlidersVertical } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFilterStore } from '@/stores/useFilterStore';
 
 export const Filter = () => {
-  const { setFilter, clearFilter, clearFilters } = useFilterStore();
+  const { filters, setFilter, clearFilter, clearFilters } = useFilterStore();
   const [filterState, setFilterState] = useState({
-    role: 'all',
-    roleType: 'all',
-    soloProjectTier: 'all',
-    voyage: 'all',
-    voyageTier: 'all',
-    gender: 'all',
+    role: filters.voyageRole || 'all',
+    roleType: filters.roleType || 'all',
+    soloProjectTier: filters.soloProjectTier || 'all',
+    voyage: filters.voyageSignup || 'all',
+    voyageTier: filters.voyageTier || 'all',
+    gender: filters.gender || 'all',
   });
+
+  useEffect(() => {
+    setFilterState({
+      role: filters.voyageRole || 'all',
+      roleType: filters.roleType || 'all',
+      soloProjectTier: filters.soloProjectTier || 'all',
+      voyage: filters.voyageSignup || 'all',
+      voyageTier: filters.voyageTier || 'all',
+      gender: filters.gender || 'all',
+    });
+  }, [filters]);
 
   const handleFilterReset = () => {
     setFilterState({
