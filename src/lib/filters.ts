@@ -24,10 +24,10 @@ export function filterChingus(
     return Object.entries(criteria).every(([key, value]) => {
       if (value === undefined) return true;
 
-      return (
-        String(chingu[key as keyof ChinguType]).toLowerCase() ===
-        value.toLowerCase()
-      );
+      const chinguValue = String(chingu[key as keyof ChinguType]).toLowerCase();
+      const filterValue = value.toLowerCase();
+
+      return chinguValue.includes(filterValue);
     });
   });
 }
