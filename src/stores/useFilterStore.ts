@@ -35,6 +35,7 @@ export const useFilterStore = create<FilterStore>((set) => ({
   clearFilters: () => set({ filters: {} }),
   clearFilter: (key) =>
     set((state) => {
+      /* eslint-disable @typescript-eslint/no-unused-vars */
       const { [key]: _removed, ...rest } = state.filters;
       return { filters: rest };
     }),
