@@ -32,7 +32,7 @@ export const Marker = ({ map, country, count }: MarkerProps) => {
     return () => {
       marker?.remove();
     };
-  }, [map, country, setSelectedCountry]);
+  }, [map, country, count, setSelectedCountry]);
 
   return null;
 };
