@@ -1,5 +1,5 @@
 'use client';
-import { useShowCountryList } from '@/stores/useShowCountryList';
+import { useUIView } from '@/stores/useUIViewStore';
 import { useSelectedCountry } from '@/stores/useSelectedCountry';
 import {
   Dialog,
@@ -15,17 +15,17 @@ import { useFilteredChingus } from '@/hooks/useFilteredChingus';
 
 export const CountryList = () => {
   const { filteredChingus } = useFilteredChingus();
-  const { isCountryListDisplayed, hideCountryList } = useShowCountryList();
   const { setSelectedCountry } = useSelectedCountry();
+  const { currentView, showMapView } = useUIView();
 
   const handleCountryClick = (country: string) => {
     setSelectedCountry(country);
-    hideCountryList();
+    showMapView();
   };
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
-      hideCountryList();
+      showMapView();
     }
   };
 
@@ -37,7 +37,7 @@ export const CountryList = () => {
   }, [filteredChingus]);
 
   return (
-    <Dialog open={isCountryListDisplayed} onOpenChange={handleOpenChange}>
+    <Dialog open={currentView === 'list'} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[425px] bg-transparent border-none p-0 fixed left-1/2 top-[35vh] -translate-x-1/2 translate-y-0 h-[90vh] overflow-visible flex flex-col gap-2 [&_button[data-slot='dialog-close']]:hidden">
         <DialogHeader className="sr-only">
           <DialogTitle>Countries</DialogTitle>
