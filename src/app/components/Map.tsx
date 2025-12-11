@@ -6,6 +6,7 @@ import { Marker } from './Marker';
 import { useSelectedCountry } from '@/stores/useSelectedCountry';
 import { getCountryData } from '@/lib/geo';
 import { useChinguStats } from '@/hooks/useChinguStats';
+import { useUIView } from '@/stores/useUIViewStore';
 
 const calculateZoom = (area: number): number => {
   if (area > 5000000) return 2.5;
@@ -20,6 +21,7 @@ export const Map = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const { selectedCountry } = useSelectedCountry();
+  const { currentView, showListView, showMapView } = useUIView();
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -60,13 +62,15 @@ export const Map = () => {
   }, [map, selectedCountry]);
 
   const { countries } = useChinguStats();
+  const showMarkers = currentView !== 'home';
 
   return (
     <div className="relative h-full w-full">
       <div id="map-container" className="h-full w-full" ref={mapContainerRef} />
-      {Object.entries(countries).map(([country, count]) => (
-        <Marker key={country} map={map} country={country} count={count} />
-      ))}
+      {showMarkers &&
+        Object.entries(countries).map(([country, count]) => (
+          <Marker key={country} map={map} country={country} count={count} />
+        ))}
     </div>
   );
 };
