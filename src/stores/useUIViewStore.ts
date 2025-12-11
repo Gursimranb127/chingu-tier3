@@ -14,9 +14,11 @@ const useUIViewStore = create<UIViewStore>((set) => ({
 
 export function useUIView() {
   const currentView = useUIViewStore((state) => state.view);
-  const showHomeView = useUIViewStore((state) => state.setView('home'));
-  const showMapView = useUIViewStore((state) => state.setView('map'));
-  const showListView = useUIViewStore((state) => state.setView('list'));
+  const setView = useUIViewStore((state) => state.setView);
+
+  const showHomeView = () => setView('home');
+  const showMapView = () => setView('map');
+  const showListView = () => setView('list');
 
   return {
     currentView,
