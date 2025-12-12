@@ -17,7 +17,7 @@ import { useUIView } from '@/stores/useUIViewStore';
 import { Button } from './ui/button';
 
 function MobileNav() {
-  const { currentView, showHomeView, showMapView, showListView } = useUIView();
+  const { showHomeView, showMapView, showListView } = useUIView();
 
   return (
     <Sheet>

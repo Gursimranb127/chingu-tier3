@@ -21,7 +21,7 @@ export const Map = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const { selectedCountry } = useSelectedCountry();
-  const { currentView, showListView, showMapView } = useUIView();
+  const { currentView } = useUIView();
 
   const spinningRef = useRef(true);
   const animationFrameIdRef = useRef<number | null>(null);
