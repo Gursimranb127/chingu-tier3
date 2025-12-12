@@ -38,11 +38,11 @@ const CountryList = ({ countryStats }: CountryListType) => {
           {countryStats?.map((countryStat: ChinguCountryStats) => (
             <div
               key={countryStat.countryCode}
-              className="bg-white rounded-2xl p-4"
+              className="bg-background rounded-2xl p-4 border-2 border-secondary"
               onClick={() => handleCountryClick(countryStat)}
             >
               <div className="flex flex-row gap-2 items-center">
-                <div className="border rounded-full p-2 bg-secondary">
+                <div className="border rounded-full p-2 bg-muted">
                   {countryStat.countryCode ? (
                     <ReactCountryFlag
                       countryCode={countryStat.countryCode}
@@ -56,7 +56,7 @@ const CountryList = ({ countryStats }: CountryListType) => {
                 </div>
                 <div>
                   <h3 className="text-xl">{countryStat.countryName}</h3>
-                  <p>{countryStat.count} Chingus</p>
+                  <p><span className='text-primary'>{countryStat.count}</span> Chingus</p>
                 </div>
               </div>
             </div>

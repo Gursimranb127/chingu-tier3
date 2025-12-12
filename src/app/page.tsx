@@ -9,7 +9,7 @@ export default function Home() {
           Find your fellow Chingus around the world
         </h1>
         <Link href="/map" className="self-center">
-          <Button className="rounded-full text-lg px-6 py-5 bg-gray-600 text-white">
+          <Button className="rounded-full text-lg px-6 py-5 --color-primary --color-primary-foreground hover:text-[125%] hover:cursor-pointer">
             Explore Now
           </Button>
         </Link>
