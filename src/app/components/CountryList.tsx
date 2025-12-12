@@ -38,7 +38,7 @@ export const CountryList = () => {
 
   return (
     <Dialog open={currentView === 'list'} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-[425px] bg-transparent border-none p-0 fixed left-1/2 top-[35vh] -translate-x-1/2 translate-y-0 h-[90vh] overflow-visible flex flex-col gap-2 [&_button[data-slot='dialog-close']]:hidden">
+      <DialogContent className="sm:max-w-[425px] bg-transparent border-none p-0 fixed left-1/2 top-[25vh] -translate-x-1/2 translate-y-0 h-[90vh] overflow-visible flex flex-col gap-2 [&_button[data-slot='dialog-close']]:hidden">
         <DialogHeader className="sr-only">
           <DialogTitle>Countries</DialogTitle>
         </DialogHeader>
