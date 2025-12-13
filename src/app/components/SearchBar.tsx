@@ -111,7 +111,7 @@ export const SearchBar = () => {
         <Search
           className="
             pointer-events-none absolute right-3 top-1/2 
-            h-5 w-5 -translate-y-1/2 text-muted-foreground
+            h-5 w-5 -translate-y-1/2 text-foreground
           "
         />
         {areResultsOpen && (
