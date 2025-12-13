@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 'use client';
 import { Map, List } from 'lucide-react';
 import { useUIView } from '@/stores/useUIViewStore';
@@ -23,7 +24,7 @@ export const ViewToggle = () => {
       />
 
       {/* Sliding knob */}
-      <span className="absolute top-0 left-0 h-8 w-8 rounded-full bg-primary shadow transition-transform duration-300 peer-checked:translate-x-8 z-0" />
+      <span className="absolute top-0 left-0 h-8 w-8 rounded-full bg-color-togle shadow transition-transform duration-300 peer-checked:translate-x-8 z-0" />
 
       {/* Left icon (Map) */}
       <Map className="absolute left-2 h-4 w-4 text-black z-10 transition-opacity peer-checked:opacity-50 peer-checked:text-primary" />

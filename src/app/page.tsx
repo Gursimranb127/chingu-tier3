@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Filter } from './components/Filter';
 import { SearchBar } from './components/SearchBar';
 import { ViewToggle } from './components/ViewToggle';
@@ -22,6 +23,10 @@ export default function Home() {
           <SearchBar />
         </div>
       </div>
+      <ViewToggle />
+      <Map />
+      <CountryList />
+      <CountryOverview />
     </div>
   );
 }

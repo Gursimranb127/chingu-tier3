@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 'use client';
 import { useUIView } from '@/stores/useUIViewStore';
 import { useSelectedCountry } from '@/stores/useSelectedCountry';
@@ -49,11 +50,11 @@ export const CountryList = () => {
             return (
               <div
                 key={country}
-                className="bg-white rounded-2xl p-4"
+                className="bg-background rounded-2xl p-4"
                 onClick={() => handleCountryClick(country)}
               >
                 <div className="flex flex-row gap-2 items-center">
-                  <div className="border rounded-full p-2 bg-secondary">
+                  <div className="border rounded-full p-2 bg-primary-muted">
                     {countryData ? (
                       <ReactCountryFlag
                         countryCode={countryData.cca2 || countryData.cca3}

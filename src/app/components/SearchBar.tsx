@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 'use client';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useFilteredChingus } from '@/hooks/useFilteredChingus';
@@ -93,7 +94,6 @@ export const SearchBar = () => {
             text-foreground
             border
             border-ring
-            border-input
             placeholder:text-muted-foreground
             px-4 py-2 pr-10
             shadow-sm
@@ -117,7 +117,7 @@ export const SearchBar = () => {
         {areResultsOpen && (
           <div className="
               absolute mt-1 max-h-60 w-full overflow-y-auto 
-              rounded-md border-2 border-ring bg-popover 
+              rounded-md border-2 border-ring bg-background 
               text-popover-foreground shadow-md "
           >
             {filteredResults.map((countryName, index) => (
@@ -128,8 +128,8 @@ export const SearchBar = () => {
                 }}
                 className={`cursor-pointer rounded px-2 py-1 ${
                   selectedIndex === index 
-                    ? "bg-accent text-accent-foreground"
-                    : "hover:bg-muted hover:text-muted-foreground"
+                    ? 'bg-accent text-accent-foreground'
+                    : 'hover:bg-muted hover:text-muted-foreground'
                 }`}
                 onClick={() => selectCountry(countryName)}
               >

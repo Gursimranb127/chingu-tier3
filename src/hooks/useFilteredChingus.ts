@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useMemo } from 'react';
 import { useChingus } from '@/hooks/useChingus';
 import { useFilterStore } from '@/stores/useFilterStore';

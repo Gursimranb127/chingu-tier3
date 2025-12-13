@@ -41,6 +41,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-togle:var(--toggle)
 }
 
 :root {
@@ -78,11 +79,13 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --toggle: #2f2b2b;
 }
 
 .dark {
   --background: #0B0B28;
   --foreground: #FFFFFF;
+  --toggle:#0FE18B;
 
   --card: #121233;
   --card-foreground: #FFFFFF;
@@ -100,7 +103,7 @@
   --tertiary-foreground:  #FFFFFF;
 
   --muted: #121233;
-  --muted-foreground: #BDBDE2;
+  --muted-foreground:#121233;
 
   --accent: #B644FF; 
   --accent-foreground: #FFFFFF;
