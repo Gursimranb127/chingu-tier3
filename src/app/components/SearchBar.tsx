@@ -94,7 +94,7 @@ export const SearchBar = () => {
             text-foreground
             border
             border-ring
-            placeholder:text-muted-foreground
+            placeholder:text-foreground
             px-4 py-2 pr-10
             shadow-sm
             md:w-96
