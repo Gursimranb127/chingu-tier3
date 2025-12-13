@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import { SlidersVertical } from 'lucide-react';
 import { useState } from 'react';
 import { useFilterStore } from '@/stores/useFilterStore';
+import { useUIView } from '@/stores/useUIViewStore';
 
 export const Filter = () => {
   const { filters, setFilter, clearFilter, clearFilters } = useFilterStore();
@@ -33,6 +34,7 @@ export const Filter = () => {
     voyageTier: 'all',
     gender: 'all',
   });
+  const { currentView } = useUIView();
 
   const handleDialogOpenChange = (open: boolean) => {
     if (open) {
@@ -70,6 +72,8 @@ export const Filter = () => {
       setFilter(`${key}`, val);
     });
   };
+
+  if (currentView === 'home') return;
 
   return (
     <Dialog onOpenChange={handleDialogOpenChange}>

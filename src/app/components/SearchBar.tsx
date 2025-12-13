@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { useFilteredChingus } from '@/hooks/useFilteredChingus';
 import { useSelectedCountry } from '@/stores/useSelectedCountry';
 import { Search } from 'lucide-react';
+import { useUIView } from '@/stores/useUIViewStore';
 
 export const SearchBar = () => {
   const { filteredChingus } = useFilteredChingus();
@@ -11,6 +12,7 @@ export const SearchBar = () => {
   const [searchValue, setSearchValue] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const resultRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { currentView } = useUIView();
 
   const countries = useMemo(() => {
     const set = new Set<string>();
@@ -75,6 +77,8 @@ export const SearchBar = () => {
       });
     }
   }, [selectedIndex]);
+
+  if (currentView === 'home') return;
 
   return (
     <div className="flex-1">

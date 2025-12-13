@@ -1,8 +1,8 @@
+'use client';
 import { Menu } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from '@/components/ui/navigation-menu';
 import {
@@ -11,9 +11,14 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
+  SheetClose,
 } from '@/components/ui/sheet';
+import { useUIView } from '@/stores/useUIViewStore';
+import { Button } from './ui/button';
 
 function MobileNav() {
+  const { showHomeView, showMapView, showListView } = useUIView();
+
   return (
     <Sheet>
       <SheetTrigger className="block md:hidden">
@@ -26,19 +31,37 @@ function MobileNav() {
         <NavigationMenu>
           <NavigationMenuList className="flex flex-col gap-3">
             <NavigationMenuItem>
-              <NavigationMenuLink className="px-4 text-xl" href="/">
-                Home
-              </NavigationMenuLink>
+              <SheetClose asChild>
+                <Button
+                  variant="link"
+                  onClick={showHomeView}
+                  className="px-4 text-xl"
+                >
+                  Home
+                </Button>
+              </SheetClose>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink className="px-4 text-xl" href="/list">
-                List
-              </NavigationMenuLink>
+              <SheetClose asChild>
+                <Button
+                  variant="link"
+                  onClick={showMapView}
+                  className="px-4 text-xl"
+                >
+                  Map
+                </Button>
+              </SheetClose>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink className="px-4 text-xl" href="/map">
-                Map
-              </NavigationMenuLink>
+              <SheetClose asChild>
+                <Button
+                  variant="link"
+                  onClick={showListView}
+                  className="px-4 text-xl"
+                >
+                  List
+                </Button>
+              </SheetClose>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
