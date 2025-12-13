@@ -1,11 +1,9 @@
-import { ChinguCountryStats } from '@/features/chingu/chingu.type';
-
-export function createMarkerElement(country: ChinguCountryStats) {
+export function createMarkerElement(count: number) {
   const el = document.createElement('div');
 
   // --- 1. Logarithmic size scaling ---
   const baseSize = 20; // minimum size
-  const scale = Math.log(country.count + 1); // log scale
+  const scale = Math.log(count + 1); // log scale
   const size = baseSize + scale * 10; // adjust multiplier to taste
 
   // --- 2. Dynamic sizing based on size ---
@@ -25,7 +23,7 @@ export function createMarkerElement(country: ChinguCountryStats) {
   el.style.fontSize = '12px';
   el.style.fontWeight = 'bold';
 
-  el.textContent = String(country.count);
+  el.textContent = String(count);
 
   return el;
 }

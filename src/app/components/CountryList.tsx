@@ -1,0 +1,80 @@
+'use client';
+import { useShowCountryList } from '@/stores/useShowCountryList';
+import { useSelectedCountry } from '@/stores/useSelectedCountry';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import ReactCountryFlag from 'react-country-flag';
+import { useMemo } from 'react';
+import { countBy } from '@/lib/count';
+import { getCountryData } from '@/lib/geo';
+import { useFilteredChingus } from '@/hooks/useFilteredChingus';
+
+export const CountryList = () => {
+  const { filteredChingus } = useFilteredChingus();
+  const { isCountryListDisplayed, hideCountryList } = useShowCountryList();
+  const { setSelectedCountry } = useSelectedCountry();
+
+  const handleCountryClick = (country: string) => {
+    setSelectedCountry(country);
+    hideCountryList();
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      hideCountryList();
+    }
+  };
+
+  const countryCounts = useMemo(() => {
+    if (!filteredChingus) return;
+    const counts = countBy(filteredChingus, 'countryName');
+
+    return Object.entries(counts);
+  }, [filteredChingus]);
+
+  return (
+    <Dialog open={isCountryListDisplayed} onOpenChange={handleOpenChange}>
+      <DialogContent className="sm:max-w-[425px] bg-transparent border-none p-0 fixed left-1/2 top-[35vh] -translate-x-1/2 translate-y-0 h-[90vh] overflow-visible flex flex-col gap-2 [&_button[data-slot='dialog-close']]:hidden">
+        <DialogHeader className="sr-only">
+          <DialogTitle>Countries</DialogTitle>
+        </DialogHeader>
+        <div className="overflow-y-auto flex-1 flex flex-col gap-2 scrollbar-hide rounded-2xl pb-48">
+          {countryCounts?.map(([country, count]) => {
+            const countryData = getCountryData(country);
+
+            return (
+              <div
+                key={country}
+                className="bg-white rounded-2xl p-4"
+                onClick={() => handleCountryClick(country)}
+              >
+                <div className="flex flex-row gap-2 items-center">
+                  <div className="border rounded-full p-2 bg-secondary">
+                    {countryData ? (
+                      <ReactCountryFlag
+                        countryCode={countryData.cca2 || countryData.cca3}
+                        svg
+                        style={{
+                          fontSize: '1.6rem',
+                          lineHeight: '1.6rem',
+                        }}
+                      />
+                    ) : null}
+                  </div>
+                  <div>
+                    <h3 className="text-xl">{country}</h3>
+                    <p>{count} Chingus</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};

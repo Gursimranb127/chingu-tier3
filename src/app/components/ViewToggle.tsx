@@ -1,7 +1,8 @@
+'use client';
 import { Map, List } from 'lucide-react';
 import { useShowCountryList } from '@/stores/useShowCountryList';
 
-export function ViewToggle() {
+export const ViewToggle = () => {
   const { isCountryListDisplayed, showCountryList, hideCountryList } =
     useShowCountryList();
 
@@ -11,7 +12,7 @@ export function ViewToggle() {
   };
 
   return (
-    <label className="flex items-center w-16 h-8 cursor-pointer select-none bg-background rounded-full p-0.5 absolute top-26 z-100 left-1/2 -translate-x-1/2">
+    <label className="flex items-center w-16 h-8 cursor-pointer select-none bg-background rounded-full p-0.5 absolute top-26 z-20 left-1/2 -translate-x-1/2">
       {/* The checkbox */}
       <input
         type="checkbox"
@@ -30,4 +31,4 @@ export function ViewToggle() {
       <List className="absolute right-2 h-4 w-4 text-primary z-10 transition-opacity peer-checked:opacity-100 peer-checked:text-black " />
     </label>
   );
-}
+};

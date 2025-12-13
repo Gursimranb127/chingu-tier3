@@ -1,17 +1,11 @@
 'use client';
-
 import { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { ChinguCountryStats } from '@/features/chingu/chingu.type';
-import Marker from './Marker';
+import { Marker } from './Marker';
 import { useSelectedCountry } from '@/stores/useSelectedCountry';
-import { getCountryCoords } from '@/lib/geo';
-import countries from 'world-countries';
-
-interface MapViewType {
-  countryStats?: ChinguCountryStats[];
-}
+import { getCountryData } from '@/lib/geo';
+import { useChinguStats } from '@/hooks/useChinguStats';
 
 const calculateZoom = (area: number): number => {
   if (area > 5000000) return 2.5;
@@ -22,7 +16,7 @@ const calculateZoom = (area: number): number => {
   return 7;
 };
 
-export default function MapView({ countryStats }: MapViewType) {
+export const Map = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const { selectedCountry } = useSelectedCountry();
@@ -34,7 +28,7 @@ export default function MapView({ countryStats }: MapViewType) {
     const m = new mapboxgl.Map({
       container: mapContainerRef.current as HTMLElement,
       center: [-71.1252, 42.4756],
-      zoom: 5,
+      zoom: 1,
     });
     setMap(m);
 
@@ -46,31 +40,33 @@ export default function MapView({ countryStats }: MapViewType) {
   useEffect(() => {
     if (!map || !selectedCountry) return;
 
-    const coords = getCountryCoords(selectedCountry.countryCode);
+    const countryData = getCountryData(selectedCountry);
 
-    if (!coords) return;
+    if (!countryData) return;
 
-    const countryData = countries.find(
-      (c) =>
-        c.cca2 === selectedCountry.countryCode ||
-        c.cca3 === selectedCountry.countryCode
-    );
+    const { area, latlng } = countryData;
 
-    const zoom = countryData ? calculateZoom(countryData.area) : 3;
+    if (!latlng) return;
+
+    const [lat, lng] = latlng;
+
+    const zoom = countryData ? calculateZoom(area) : 3;
 
     map.flyTo({
-      center: [coords.lng, coords.lat],
+      center: [lng, lat],
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
       zoom,
     });
   }, [map, selectedCountry]);
 
+  const { countries } = useChinguStats();
+
   return (
     <div className="relative h-full w-full">
       <div id="map-container" className="h-full w-full" ref={mapContainerRef} />
-      {countryStats?.map((country) => (
-        <Marker key={country.countryCode} map={map} country={country} />
+      {Object.entries(countries).map(([country, count]) => (
+        <Marker key={country} map={map} country={country} count={count} />
       ))}
     </div>
   );
-}
+};

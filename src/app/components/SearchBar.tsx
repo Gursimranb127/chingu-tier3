@@ -1,32 +1,37 @@
-"use client";
+'use client';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { useFilteredChingus } from '@/hooks/useFilteredChingus';
+import { useSelectedCountry } from '@/stores/useSelectedCountry';
+import { Search } from 'lucide-react';
 
-import { useState, useEffect, useMemo, useRef } from "react";
-import { useCountryStats } from "@/hooks/useCountryStats";
-import { ChinguCountryStats } from "@/features/chingu/chingu.type";
-import { useSelectedCountry } from "@/stores/useSelectedCountry";
-import { Search } from "lucide-react";
-
-const SearchBar = () => {
-  const { data: countryStats } = useCountryStats();
-  const [searchValue, setSearchValue] = useState("");
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-  const resultRefs = useRef<(HTMLDivElement | null)[]>([]);
+export const SearchBar = () => {
+  const { filteredChingus } = useFilteredChingus();
   const { setSelectedCountry } = useSelectedCountry();
 
+  const [searchValue, setSearchValue] = useState('');
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const resultRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const countries = useMemo(() => {
+    const set = new Set<string>();
+    filteredChingus.forEach((c) => {
+      if (c.countryName) set.add(c.countryName);
+    });
+    return Array.from(set).sort();
+  }, [filteredChingus]);
+
   const filteredResults = useMemo(() => {
-    if (!searchValue || !countryStats) return [];
+    if (!searchValue) return [];
 
     const searchLower = searchValue.toLowerCase();
-    return countryStats.filter((country: ChinguCountryStats) =>
-      country.countryName?.toLowerCase().includes(searchLower)
-    );
-  }, [searchValue, countryStats]);
+    return countries.filter((name) => name.toLowerCase().includes(searchLower));
+  }, [searchValue, countries]);
 
   const areResultsOpen = searchValue.length > 0 && filteredResults.length > 0;
 
-  const selectCountry = (country: ChinguCountryStats) => {
-    setSelectedCountry(country);
-    setSearchValue("");
+  const selectCountry = (countryName: string) => {
+    setSelectedCountry(countryName);
+    setSearchValue('');
     setSelectedIndex(-1);
   };
 
@@ -72,11 +77,9 @@ const SearchBar = () => {
   }, [selectedIndex]);
 
   return (
-    <div className="absolute top-16 z-[1000] flex w-full items-center justify-center px-4">
+    <div className="flex-1">
       <div className="relative w-full md:w-auto">
         <input
-          id="country-search"
-          name="country-search"
           type="search"
           placeholder="Search Country"
           className="
@@ -108,35 +111,30 @@ const SearchBar = () => {
           "
         />
         {areResultsOpen && (
-          <div
-            className="
+          <div className="
               absolute mt-1 max-h-60 w-full overflow-y-auto 
               rounded-md border-2 border-ring bg-popover 
-              text-popover-foreground shadow-md
-            "
+              text-popover-foreground shadow-md "
           >
-            {filteredResults.map((country: ChinguCountryStats, index: number) => (
-                <div
-                  key={country.countryCode}
-                  ref={(el) => {
-                    resultRefs.current[index] = el;
-                  }}
-                  className={`
-                    cursor-pointer rounded px-2 py-2
-                    ${selectedIndex === index
-                        ? "bg-accent text-accent-foreground"
-                        : "hover:bg-muted hover:text-muted-foreground"}
-                    `}
-                  onClick={() => selectCountry(country)}
-                >
-                  {country.countryName}
-                </div>
-              ))}
+            {filteredResults.map((countryName, index) => (
+              <div
+                key={countryName}
+                ref={(el) => {
+                  resultRefs.current[index] = el;
+                }}
+                className={`cursor-pointer rounded px-2 py-1 ${
+                  selectedIndex === index 
+                    ? "bg-accent text-accent-foreground"
+                    : "hover:bg-muted hover:text-muted-foreground"
+                }`}
+                onClick={() => selectCountry(countryName)}
+              >
+                {countryName}
+              </div>
+            ))}
           </div>
         )}
       </div>
     </div>
   );
 };
-
-export default SearchBar;
